@@ -31,6 +31,7 @@ def transcribe_audio(audio_path='audio.wav'):
 # detect objects
 def detect_objects_in_frame(frame):
     # need to train model for object detection
+    pass
 
 # generate summary
 def generate_gpt4_summary(audio_transcription, object_summary):
