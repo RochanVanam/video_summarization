@@ -1,11 +1,13 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, Response
 import os
 import cv2
+from video_processing import process_video_for_summary
 
 # initialize flask app
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.secret_key = 'supersecretkey'
+
 
 # ensure directories exist
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -29,9 +31,10 @@ def home():
         video_file.save(video_path)
         flash(f'Video {video_file.filename} uploaded successfully!')
 
-        preprocess_video(video_path)
+        # process video
+        video_summary = process_video_for_summary(video_path)
 
-        return redirect(url_for('home'))
+        return render_template('summary.html', summary=video_summary)
 
     return render_template('index.html')
 
